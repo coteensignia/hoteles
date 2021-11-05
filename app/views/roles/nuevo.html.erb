@@ -1,0 +1,23 @@
+<!-- 
+
+<h2>Aquí crear el formulario para los</h2>
+<h3>ROLES</h3>
+
+<p> Etiqueta ruby con igual </p>
+<%= @mi_nombre %>
+
+<p> Etiqueta ruby SIN igual </p>
+<% @mi_nombre %>
+
+-->
+
+<h1>Crear un nuevo rol</h1>
+
+<%= form_with(model: @rol) do |formulario| %>
+    <%= formulario.label        :rol %>
+    <%= formulario.text_field   :rol %>
+
+    <%= formulario.submit "Crear" %>
+<% end %>
+
+<%= link_to "Volver", roles_path %>

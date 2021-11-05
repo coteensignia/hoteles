@@ -1,0 +1,28 @@
+<div class="card">
+    <div class="card-body">
+
+        <h3>Registro de una ciudad</h3>
+
+        <%= form_with(model: @ciudad) do |formulario| %>
+            
+            <div class="mb-3">
+                <%= formulario.label :nombre, class: 'form-label' %>
+                <!-- <input type="text" id="nombre" name="nombre"> -->
+                <%= formulario.text_field :nombre, class: 'form-control' %>
+                <% if @ciudad.errors[:nombre].any? %>
+                    <div>
+                        <%= @ciudad.errors[:nombre].first %>
+                    </div>
+                <% end %>
+            </div>
+
+
+            <div class="mb-3 text-end">
+                <%= link_to "Cancelar", ciudades_path, class: "btn btn-light mr-3" %>
+                <%= formulario.submit 'Registrar', class: 'btn btn-primary' %>
+            </div>
+
+        <% end %>
+
+    </div>
+</div>

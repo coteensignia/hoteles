@@ -1,0 +1,40 @@
+<h5 class="mb-3"><b>Lista de hoteles</b></h5>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-hover">
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Estrellas</th>
+                <th>Ciudad</th>                
+                <th>Acciones</th>                
+            </tr>
+            <% @hoteles.each do |h| %>
+                <tr>
+                    <td class="text-center">
+                        <%= h.id %>
+                    </td>
+                    <td class="">
+                        <%= h.nombre %>
+                    </td>
+                    <td class="">
+                        <% h.estrellas.to_i.times do |e| %>
+                            ⭐
+                        <% end %>
+                    </td>
+                    <td class="">
+                        <%= h.ciudad.nombre %>
+                    </td>
+                    <td class="text-center">
+                        <%= link_to "Editar", editar_hotel_path(h), class: 'btn btn-warning' %>
+                        <%= link_to "Eliminar", hotel_path(h), 
+                        method: :delete, 
+                        class: 'btn btn-danger',
+                        data: { confirm: "¿Está seguro que quiere eliminar el hotel?" } %>
+                    </td>
+                </tr>
+            <% end %>
+        </table>
+    </div>
+</div>
