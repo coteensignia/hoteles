@@ -1,69 +1,68 @@
 class HabitacionesController < ApplicationController
-
-    # before_action :asignar_ciudad, only: [:editar, :actualizar, :eliminar]
-
-    # GET /habitacion
+    
+    before_action :asignar_habitacion, only: [:mostrar, :editar, :actualizar, :eliminar]
+    
+    # GET /habitaciones
     def listar
-        @lista_habitaciones = Habitacion.all
+        @habitaciones = Habitacion.all
     end
 
-    # GET /ciudades/nuevo
-
-
-    def mostrar_formulario_crear
-    #     @ciudad = Ciudad.new
+    # GET /habitaciones/nueva
+    def nueva
+        @habitacion = Habitacion.new
+        @hoteles = Hotel.all
+        @texto_boton = "Registrar habitación"
     end
 
-    # GET /ciudades/:id/editar
+    # GET /habitaciones/:id
+    def mostrar
+    end
+
+    # GET /habitaciones/:id/editar
     def editar
+        @hoteles = Hotel.all
+        @texto_boton = "Actualizar habitación"
     end
 
-    # POST /ciudades
+    # POST /habitaciones
     def guardar
-        # # Guardando los datos 💾
-        # @ciudad = Ciudad.new
-        # @ciudad.nombre = params_ciudad[:nombre]
-        # if @ciudad.save
-        #     # redirect_to "/ciudades"
-        #     redirect_to ciudades_path
-        # else
-        #     render :mostrar_formulario_crear
-        # end
-
+        @habitacion = Habitacion.new(params_habitacion)
+        if @habitacion.save
+            redirect_to habitaciones_path
+        else
+            @hoteles = Hotel.all
+            @texto_boton = "Registrar habitación"
+            render :nueva
+        end
     end
 
-    # PATH /ciudades/:id
+    # PATH/PUT /habitaciones/:id
     def actualizar
-    #     @ciudad.nombre = params_ciudad[:nombre]
-    #     if @ciudad.save
-    #         redirect_to ciudades_path
-    #     else
-    #         render :editar
-    #     end
+        @habitacion.nombre          = params_habitacion[:nombre]
+        @habitacion.esta_reservada  = params_habitacion[:esta_reservada]
+        @habitacion.precio          = params_habitacion[:precio]
+        @habitacion.hotel_id        = params_habitacion[:hotel_id]
+        if @habitacion.save
+            redirect_to habitaciones_path
+        else
+            @hoteles = Hotel.all
+            @texto_boton = "Actualizar habitación"
+            render :editar
+        end
     end
 
-    # DELETE /ciudades/:id
+    # DELETE /habitaciones/:id
     def eliminar
-    #     @ciudad.destroy
-    #     redirect_to ciudades_path
-    # rescue
-    #     flash[:error_ciudad] = "No se puede eliminar la ciudad"
-    #     redirect_to ciudades_path
+        @habitacion.destroy
+        redirect_to habitaciones_path
     end
 
-    # private # Todo lo que está abajo 👇👇 es PRIVADO
-    
-    # # recuperamos el :id de la URL 📦 y lo buscamos en la base de datos
-    # def asignar_habitacion
-    #     @ciudad = Habitacion.find_by(id: params[:id])
-    #     puts "ANTES ASIGNAR UNA HABITACION".center(50, "🚥")
-    # end
+    private
+    def params_habitacion
+        return params.require(:habitacion).permit(:nombre, :precio, :esta_reservada, :hotel_id)
+    end
 
-    # # extraer los datos del formulario 📦
-    # def params_ciudad
-    #     return params.require(:habitacion).permit(:nombre)
-    # end
-
-
-    
+    def asignar_habitacion
+        @habitacion = Habitacion.find_by(id: params[:id])
+    end
 end
