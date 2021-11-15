@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get 'roles/:id',            to: 'roles#mostrar', as: 'rol'
 
   post    'roles',        to: 'roles#guardar'
-  patch   'roles/:id',    to: 'roles#actualizar', as: 'rol'
+  patch   'roles/:id',    to: 'roles#actualizar'
   delete  'roles/:id',    to: 'roles#eliminar'
 
   # Ciudades
